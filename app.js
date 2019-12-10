@@ -88,15 +88,12 @@ function optionChanged(newSample) {
 function buildMetadata() {
   d3.json("samples.json").then(function(sample) {
   
-    // Use d3 to select the panel with id of `#sample-metadata`
+
     var demographic = d3.select("#sample-metadata");
 
-    // Use `.html("") to clear any existing metadata
+
     demographic.html("");
 
-    // Use `Object.entries` to add each key and value pair to the panel
-    // Hint: Inside the loop, you will need to use d3 to append new
-    // tags for each key-value in the metadata.
     Object.entries(sample).forEach(function([key, value]) {
       var row = demographic.append("p");
       row.text(`${key}: ${value}`);
