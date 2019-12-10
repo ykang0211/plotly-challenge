@@ -23,7 +23,7 @@ buildPlot();
 
   
 // Build Bubble Chart
-function buildPlot() {
+function buildChart() {
   d3.json("samples.json").then(function(data) {
     console.log(data);
     
@@ -56,7 +56,7 @@ function buildPlot() {
 
   });
 };
-buildPlot();
+buildChart();
 
 
 
