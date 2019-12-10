@@ -1,108 +1,128 @@
 
 
 
+function buildMetadata(_meta) {
+  // d3.json("samples.json").then((importedData) => {
+  //   console.log(importedData);
+  //   var data = importedData;
 
-// Dropdown Menu
+  //   data.sort(function(a, b) {
+  //     return parseFloat(b.names) - parseFloat(a.names);
+  //   });
+
+  //   data = data.slice(0,10);
+
+  //   data = data.reverse();
+
+  //   var trace1 = {
+  //     x: data.map(row => row.otu_ids),
+  //     y: data.map(row => row.otu_ids),
+  //     text: data.map(row => row.otu_labels),
+  //     mode: "markers",
+  //     marker: {
+  //       color: data.map(row => row.otu_ids),
+  //       size: data.map(row => row.otu_ids)
+  //     }
+  //   };
+
+  //   var chartData = [trace1];
+
+  //   Plotly.newPlot("bar", chartData);
+
+  // });
+
+
+  d3.json("samples.json").then(function(data) {
+
+
+    var demographic = d3.select("#sample-metadata");
+
+
+    demographic.html("");
+
+    Object.entries(data.metadata).forEach(function([key, value]) {
+      var row = demographic.append("p");
+      row.text(`${key}: ${value}`);
+    });
+});
+};
+// buildMetadata();
+
+// Build Bubble Chart
+function buildChart(_meta) {
+  d3.json("samples.json").then((charts) => {
+    console.log(charts);
+
+    var samples = charts.samples;
+    var resultArray = samples.filter(sampleObj => sampleObj.id);
+    var otu_ids = resultArray.map(o_i => o_i.otu_ids);
+    var otu_labels = resultArray.map(o_l => o_l.otu_labels);
+    var sample_values = resultArray.map(s_v => s_v.sample_values);
+    // var result = resultArray[0];
+    // var otu_ids = result.otu_ids;
+    // var otu_labels = result.otu_labels;
+    // var sample_values = result.sample_values;
+
+    var bar_values = sample_values.slice(0,10);
+    var bar_labels = otu_ids.slice(0,10);
+    var bar_hover = otu_labels.slice(0,10);
+
+    var trace2 = {
+      x: bar_values,
+      y: bar_labels,
+      hovertext: bar_hover,
+      // x: charts.sample_values.slice(0,10),
+      // y: charts.otu_ids.slice(0, 10),
+      // hovertext: charts.otu_labels.slice(0, 10),
+      type: "bar",
+      orientation: "h"
+    }
+
+    var data_bar = [trace2];
+
+    Plotly.newPlot("bar", data_bar);
+
+    var trace1 = {
+      x: bar_labels,
+      y: bar_values,
+      text: bar_hover,
+      mode: "markers",
+      marker: {
+        color: bar_labels,
+        size: bar_hover
+      }
+    };
+
+    var data_bubble = [trace1];
+
+    var layout = {
+      xaxis: { title: "OTU ID"},
+    };
+
+    Plotly.newPlot("bubble", data_bubble, layout);
+
+
+
+  });
+};
+
 function init() {
-
   var selector = d3.select("#selDataset");
 
-  d3.json("samples.json").then((sampleNames) => {
-    sampleNames.forEach((sample) => {
-      selector
-        .append("option")
-        .text(sample)
-        .property("value", sample);
+  d3.json("samples.json").then((dataNames) => {
+    dataNames.names.forEach((_meta) => {
+      selector.append("option").text(_meta).property("value", _meta);
     });
 
-    const firstSample = sampleNames[0];
-    buildPlot(firstSample);
+    var firstSample = dataNames.names[0];
+    buildChart(firstSample);
     buildMetadata(firstSample);
   });
-
-  function buildMetadata() {
-    d3.json("samples.json").then(function(sample) {
-    
-  
-      var demographic = d3.select("#sample-metadata");
-  
-  
-      demographic.html("");
-  
-      Object.entries(sample).forEach(function([key, value]) {
-        var row = demographic.append("p");
-        row.text(`${key}: ${value}`);
-      });
-    });
-  };
-
-  function buildPlot() {
-    d3.json("samples.json").then(function(data) {
-      console.log(data);
-  
-      var bar_values = data.sample_values.slice(0,10);
-      var bar_labels = data.otu_ids.slice(0,10);
-      var bar_hover = data.otu_labels.slice(0,10);
-  
-      var data = [{
-        x: bar_values,
-        y: bar_labels,
-        hovertext: bar_hover,
-        type: 'bar',
-        orientation: 'h'
-      }];
-  
-      Plotly.newPlot("bar", data);
-  
-    });
-  };
-  
-  // buildPlot();
-  
-    
-  // Build Bubble Chart
-  function buildChart() {
-    d3.json("samples.json").then(function(data) {
-      console.log(data);
-      
-      var x = data.otu_ids;
-      var y = data.sample_values;
-      var markerSize = data.sample_values;
-      var markerColors = data.otu_ids; 
-      var textValues = data.otu_labels;
-  
-      console.log(data.otu_ids);
-  
-      var trace1 = {
-        x: x,
-        y: y,
-        text: textValues,
-        mode: 'markers',
-        marker: {
-          color: markerColors,
-          size: markerSize
-        } 
-      };
-    
-      var data = [trace1];
-  
-      var layout = {
-        xaxis: { title: "OTU ID"},
-      };
-  
-      Plotly.newPlot("bubble", data, layout);
-  
-    });
-  };
-  // buildChart();
-
-};
+}
 
 function optionChanged(newSample) {
-  buildPlot(newSample);
+  buildChart(newSample);
   buildMetadata(newSample);
-};
+}
 
 init();
-
-
