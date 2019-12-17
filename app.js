@@ -1,6 +1,4 @@
 
-
-
 function buildMetadata(_meta) {
   // d3.json("samples.json").then((importedData) => {
   //   console.log(importedData);
@@ -31,22 +29,23 @@ function buildMetadata(_meta) {
 
   // });
 
+  var demographic = d3.select("#sample-metadata");
+
+
+  demographic.html("");
+
 
   d3.json("samples.json").then(function(data) {
-
-
-    var demographic = d3.select("#sample-metadata");
-
-
-    demographic.html("");
-
-    Object.entries(data.metadata).forEach(function([key, value]) {
-      var row = demographic.append("p");
-      row.text(`${key}: ${value}`);
+    Object.entries(data.metadata).forEach(([key, value]) => {
+      demographic.append('p').text(`${key}: ${value}`)
     });
+    // Object.entries(data.metadata).forEach(function([key, value]) {
+    //   var row = demographic.append("p");
+    //   row.text(`${key}: ${value}`);
+    // });
 });
 };
-// buildMetadata();
+// buildMetadata(_meta);
 
 // Build Bubble Chart
 function buildChart(_meta) {
@@ -108,6 +107,8 @@ function buildChart(_meta) {
 
 function init() {
   var selector = d3.select("#selDataset");
+
+  selector.html("");
 
   d3.json("samples.json").then((dataNames) => {
     dataNames.names.forEach((_meta) => {
