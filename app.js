@@ -95,12 +95,12 @@ function buildCharts(_meta) {
             { range: [0, 1], color: "beige" },
             { range: [1, 2], color: "antiquewhite" },
             { range: [2, 3], color: "blanchedalmond" },
-            { range: [3, 4], color: "lime" },
+            { range: [3, 4], color: "palegoldenrod" },
             { range: [4, 5], color: "darkseagreen" },
-            { range: [5, 6], color: "lightgreen" },
-            { range: [6, 7], color: "mediumseagreen" },
-            { range: [7, 8], color: "olivedrab" },
-            { range: [8, 9], color: "darkolivegreen" }
+            { range: [5, 6], color: "olivedrab" },
+            { range: [6, 7], color: "olive" },
+            { range: [7, 8], color: "darkolivegreen" },
+            { range: [8, 9], color: "seagreen" }
           ]
           // colorscale: "greens"
           // threshold: {
