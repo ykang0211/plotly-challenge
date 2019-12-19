@@ -1,129 +1,142 @@
+var data;
+
+d3.json("samples.json").then((importedData) => {
+    data = importedData;
+    
+init();
+});
 
 function buildMetadata(_meta) {
-  // d3.json("samples.json").then((importedData) => {
-  //   console.log(importedData);
-  //   var data = importedData;
 
-  //   data.sort(function(a, b) {
-  //     return parseFloat(b.names) - parseFloat(a.names);
-  //   });
-
-  //   data = data.slice(0,10);
-
-  //   data = data.reverse();
-
-  //   var trace1 = {
-  //     x: data.map(row => row.otu_ids),
-  //     y: data.map(row => row.otu_ids),
-  //     text: data.map(row => row.otu_labels),
-  //     mode: "markers",
-  //     marker: {
-  //       color: data.map(row => row.otu_ids),
-  //       size: data.map(row => row.otu_ids)
-  //     }
-  //   };
-
-  //   var chartData = [trace1];
-
-  //   Plotly.newPlot("bar", chartData);
-
-  // });
-
-  var demographic = d3.select("#sample-metadata");
-
-
-  demographic.html("");
-
-
-  d3.json("samples.json").then(function(data) {
-    Object.entries(data.metadata).forEach(([key, value]) => {
-      demographic.append('p').text(`${key}: ${value}`)
+    var demographicData = data.metadata.filter(obj => obj.id == _meta)[0];
+    console.log(demographicData);
+ 
+    var demographic = d3.select("#sample-metadata");
+    demographic.html("");
+    Object.entries(demographicData).forEach(([key, value]) => {
+      demographic.append("p").text(`${key}: ${value}`)
     });
-    // Object.entries(data.metadata).forEach(function([key, value]) {
-    //   var row = demographic.append("p");
-    //   row.text(`${key}: ${value}`);
-    // });
-});
 };
-// buildMetadata(_meta);
 
-// Build Bubble Chart
-function buildChart(_meta) {
-  d3.json("samples.json").then((charts) => {
-    console.log(charts);
+function buildCharts(_meta) {
+    
+    var chartSamples = data.samples.filter(obj => obj.id == _meta)[0];
+    
+    var bar_labels = chartSamples.otu_ids.slice(0, 10);
+    var otu_ids = bar_labels.reverse();
+    otu_ids = otu_ids.map(id=>"OTU " + id);
+   
+    var bar_values = chartSamples.sample_values.slice(0, 10);
+    var sampleValues = bar_values.reverse();
+    
+    var bar_hover = chartSamples.otu_labels.slice(0, 10);
+    var otu_labels = bar_hover.reverse();
+    
 
-    var samples = charts.samples;
-    var resultArray = samples.filter(sampleObj => sampleObj.id);
-    var otu_ids = resultArray.map(o_i => o_i.otu_ids);
-    var otu_labels = resultArray.map(o_l => o_l.otu_labels);
-    var sample_values = resultArray.map(s_v => s_v.sample_values);
-    // var result = resultArray[0];
-    // var otu_ids = result.otu_ids;
-    // var otu_labels = result.otu_labels;
-    // var sample_values = result.sample_values;
-
-    var bar_values = sample_values.slice(0,10);
-    var bar_labels = otu_ids.slice(0,10);
-    var bar_hover = otu_labels.slice(0,10);
-
-    var trace2 = {
-      x: bar_values,
-      y: bar_labels,
-      hovertext: bar_hover,
-      // x: charts.sample_values.slice(0,10),
-      // y: charts.otu_ids.slice(0, 10),
-      // hovertext: charts.otu_labels.slice(0, 10),
-      type: "bar",
-      orientation: "h"
-    }
-
-    var data_bar = [trace2];
-
-    Plotly.newPlot("bar", data_bar);
-
+// bar chart
     var trace1 = {
-      x: bar_labels,
-      y: bar_values,
-      text: bar_hover,
-      mode: "markers",
-      marker: {
-        color: bar_labels,
-        size: bar_hover
-      }
+        x: sampleValues,
+        y: otu_ids,
+        text: otu_labels,
+        type: "bar",
+        orientation: "h",
     };
+    
+    var data_bar = [trace1];
 
-    var data_bubble = [trace1];
+    Plotly.newPlot("bar", data_bar, layout);
 
+// bubble chart
+    var trace2 = {
+        x: chartSamples.otu_ids,
+        y: chartSamples.sample_values,
+        text: chartSamples.otu_labels,
+        mode: "markers",
+        marker: {
+          color: chartSamples.otu_ids,
+          size: chartSamples.sample_values
+        }
+      };
+    
+    var data_bubble = [trace2];
+    
     var layout = {
       xaxis: { title: "OTU ID"},
     };
-
+    
     Plotly.newPlot("bubble", data_bubble, layout);
 
+// gauge chart
+    var gaugeData = data.metadata.filter(sampleObj => sampleObj.id == _meta)[0];
 
+    var gaugeChart = [
+      {
+        type: "indicator",
+        mode: "gauge+number+delta",
+        value: gaugeData.wfreq,
+        title: { text: "Belly Button Washing Frequency: Scrubs per week", font: { size: 24 } },
+        delta: { reference: 400, increasing: { color: "Viridis" } },
+        gauge: {
+          axis: { range: [null, 9], tickwidth: 1, tickcolor: "red" },
+          bar: { color: "darkred" },
+          bgcolor: "white",
+          borderwidth: 2,
+          bordercolor: "lightgrey",
+          steps: [
+            // { range: [0, 1]},
+            // { range: [1, 2]},
+            // { range: [2, 3]},
+            // { range: [3, 4]},
+            // { range: [4, 5]},
+            // { range: [5, 6]},
+            // { range: [6, 7]},
+            // { range: [7, 8]},
+            // { range: [8, 9]}
+            { range: [0, 1], color: "beige" },
+            { range: [1, 2], color: "antiquewhite" },
+            { range: [2, 3], color: "blanchedalmond" },
+            { range: [3, 4], color: "lime" },
+            { range: [4, 5], color: "darkseagreen" },
+            { range: [5, 6], color: "lightgreen" },
+            { range: [6, 7], color: "mediumseagreen" },
+            { range: [7, 8], color: "olivedrab" },
+            { range: [8, 9], color: "darkolivegreen" }
+          ]
+          // colorscale: "greens"
+          // threshold: {
+          //   line: { color: "red", width: 4 },
+          //   thickness: 0.75,
+          //   value: 10
+          // }
+        }
+      }
+    ];
+    
+    var layout = {
+      width: 500,
+      height: 400,
+      margin: { t: 25, r: 25, l: 25, b: 25 },
+      paper_bgcolor: "white",
+      font: { color: "black", family: "Arial" }
+    };
+    
+    Plotly.newPlot('gauge', gaugeChart, layout);
 
-  });
 };
 
 function init() {
   var selector = d3.select("#selDataset");
-
-  selector.html("");
-
-  d3.json("samples.json").then((dataNames) => {
-    dataNames.names.forEach((_meta) => {
-      selector.append("option").text(_meta).property("value", _meta);
-    });
-
-    var firstSample = dataNames.names[0];
-    buildChart(firstSample);
-    buildMetadata(firstSample);
+  var name = data.names;
+  name.forEach(_meta => {
+      selector
+          .append("option")
+          .text(_meta)
+          .property("value", _meta);
   });
-}
+  optionChanged(data.names[0]);
+};
 
 function optionChanged(newSample) {
-  buildChart(newSample);
-  buildMetadata(newSample);
-}
-
-init();
+    buildMetadata(newSample);
+    buildCharts(newSample);
+};
