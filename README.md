@@ -45,7 +45,7 @@ function buildMetadata(_meta) {
 
 <br>
 
-<div align='center'><img width='30%' src='images/sample-metadata-panel.jpg' alt='sample-metadata-panel'></div>
+<div align='center'><img width='30%' src='images/panel.png' alt='panel'></div>
 
 <br>
 
