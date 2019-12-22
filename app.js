@@ -69,13 +69,65 @@ function buildCharts(_meta) {
 // gauge chart
     var gaugeData = data.metadata.filter(sampleObj => sampleObj.id == _meta)[0];
 
+    // // part of data to input
+    // var traceGauge = {
+    //   type: 'pie',
+    //   showlegend: false,
+    //   hole: 0.4,
+    //   rotation: 90,
+    //   values: gaugeData.wfreq,
+    //   title: { text: "Belly Button Washing Frequency: Scrubs per week", font: { size: 12 } },
+    //   text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
+    //   direction: 'clockwise',
+    //   textinfo: 'text',
+    //   textposition: 'inside',
+    //   marker: {
+    //     colors: ['','','','','','','','','','white'],
+    //     labels: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
+    //     hoverinfo: 'label'
+    //   }
+    // }
+
+    // // needle
+    // var degrees = 50, radius = .9
+    // var radians = degrees * Math.PI / 180
+    // var x = -1 * radius * Math.cos(radians) * wfreq
+    // var y = radius * Math.sin(radians)
+
+    // var gaugeLayout = {
+    //   shapes: [{
+    //     type: 'line',
+    //     x0: 0.5,
+    //     y0: 0.5,
+    //     x1: 0.6,
+    //     y1: 0.6,
+    //     line: {
+    //       color: 'black',
+    //       width: 3
+    //     }
+    //   }],
+    //   title: 'Chart',
+    //   xaxis: {visible: false, range: [-1, 1]},
+    //   yaxis: {visible: false, range: [-1, 1]}
+    // }
+
+    // // var dataGauge = [traceGauge]
+
+    // Plotly.newplot('gauge', traceGauge, gaugeLayout)
+
     var gaugeChart = [
       {
         type: "indicator",
         mode: "gauge+number+delta",
         value: gaugeData.wfreq,
-        title: { text: "Belly Button Washing Frequency: Scrubs per week", font: { size: 24 } },
-        delta: { reference: 400, increasing: { color: "Viridis" } },
+        title: { text: "Belly Button Washing Frequency: Scrubs per week", font: { size: 15 } },
+        // delta: { reference: 400, increasing: { color: "Viridis" } },
+        text: ["0-1", "1-2", "2-3",
+          "3-4", "4-5", "5-6", "6-7",
+          "7-8", "8-9"
+        ],
+        textinfo: "text",
+        textposition: "inside",
         gauge: {
           axis: { range: [null, 9], tickwidth: 1, tickcolor: "red" },
           bar: { color: "darkred" },
@@ -110,8 +162,9 @@ function buildCharts(_meta) {
           // }
         }
       }
+      
     ];
-    
+
     var layout = {
       width: 500,
       height: 400,
@@ -120,7 +173,7 @@ function buildCharts(_meta) {
       font: { color: "black", family: "Arial" }
     };
     
-    Plotly.newPlot('gauge', gaugeChart, layout);
+    Plotly.newPlot("gauge", gaugeChart, layout);
 
 };
 
