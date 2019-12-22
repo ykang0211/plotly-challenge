@@ -166,15 +166,17 @@ function buildCharts(_meta) {
 <br>
 
 
-<br>
-
 Gauge Chart: 
 ![alt text](https://github.com/ykang0211/plotly-challenge/blob/master/images/gauge_chart.PNG "Gauge Chart")
 
 <br>
+
 Bubble Chart: 
-![alt text](https://github.com/ykang0211/plotly-challenge/blob/master/images/bubble.PNG "Bubble Chart")
+![alt text](https://github.com/ykang0211/plotly-challenge/blob/master/images/bubble_chart.PNG "Bubble Chart")
+
+
 <br>
+
 
 I made two more functions: ```init()``` and ```optionChanged()```. The ```init()``` function just initializes the build of the first sample. The ```optionChanged()``` function updates the previous functions ```buildCharts()``` and ```buildMetadata()``` when a new sample is selected by the user from the dropdown in the metadata panel.
 
