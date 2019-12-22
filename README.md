@@ -2,9 +2,9 @@
 
 <br>
 
-## B<sup>3</sup> Dashboard: Belly Button Biodiversity
+## Dashboard: Belly Button Biodiversity
 
-Check out my [B<sup>3</sup> app](https://ykang0211.github.io/plotly-challenge/).
+Check out my [app](https://ykang0211.github.io/plotly-challenge/).
 
 <br>
 
@@ -101,52 +101,65 @@ function buildCharts(_meta) {
 // gauge chart
     var gaugeData = data.metadata.filter(sampleObj => sampleObj.id == _meta)[0];
 
-    // part of data to input
-    var traceGauge = {
-      type: 'pie',
-      showlegend: false,
-      hole: 0.4,
-      rotation: 90,
-      values: gaugeData.wfreq,
-      title: { text: "Belly Button Washing Frequency: Scrubs per week", font: { size: 15 } },
-      text: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
-      direction: 'clockwise',
-      textinfo: 'text',
-      textposition: 'inside',
-      marker: {
-        colors: ['','','','','','','','','','white'],
-        labels: ['0-1','1-2','2-3','3-4','4-5','5-6','6-7','7-8','8-9'],
-        hoverinfo: 'label'
-      }
-    }
-
-    // needle
-    var degrees = 50, radius = .9
-    var radians = degrees * Math.PI / 180
-    var x = -1 * radius * Math.cos(radians) * wfreq
-    var y = radius * Math.sin(radians)
-
-    var gaugeLayout = {
-      shapes: [{
-        type: 'line',
-        x0: 0.5,
-        y0: 0.5,
-        x1: 0.6,
-        y1: 0.6,
-        line: {
-          color: 'black',
-          width: 3
+  var gaugeChart = [
+      {
+        type: "indicator",
+        mode: "gauge+number+delta",
+        value: gaugeData.wfreq,
+        title: { text: "Belly Button Washing Frequency: Scrubs per week", font: { size: 15 } },
+        // delta: { reference: 400, increasing: { color: "Viridis" } },
+        text: ["0-1", "1-2", "2-3",
+          "3-4", "4-5", "5-6", "6-7",
+          "7-8", "8-9"
+        ],
+        textinfo: "text",
+        textposition: "inside",
+        gauge: {
+          axis: { range: [null, 9], tickwidth: 1, tickcolor: "red" },
+          bar: { color: "darkred" },
+          bgcolor: "white",
+          borderwidth: 2,
+          bordercolor: "lightgrey",
+          steps: [
+            // { range: [0, 1]},
+            // { range: [1, 2]},
+            // { range: [2, 3]},
+            // { range: [3, 4]},
+            // { range: [4, 5]},
+            // { range: [5, 6]},
+            // { range: [6, 7]},
+            // { range: [7, 8]},
+            // { range: [8, 9]}
+            { range: [0, 1], color: "beige" },
+            { range: [1, 2], color: "antiquewhite" },
+            { range: [2, 3], color: "blanchedalmond" },
+            { range: [3, 4], color: "palegoldenrod" },
+            { range: [4, 5], color: "darkseagreen" },
+            { range: [5, 6], color: "olivedrab" },
+            { range: [6, 7], color: "olive" },
+            { range: [7, 8], color: "darkolivegreen" },
+            { range: [8, 9], color: "seagreen" }
+          ]
+          // colorscale: "greens"
+          // threshold: {
+          //   line: { color: "red", width: 4 },
+          //   thickness: 0.75,
+          //   value: 10
+          // }
         }
-      }],
-      title: 'Chart',
-      xaxis: {visible: false, range: [-1, 1]},
-      yaxis: {visible: false, range: [-1, 1]}
-    }
+      }
+      
+    ];
 
-    // var dataGauge = [traceGauge]
-
-    Plotly.newplot('gauge', traceGauge, gaugeLayout)
-
+    var layout = {
+      width: 500,
+      height: 400,
+      margin: { t: 25, r: 25, l: 25, b: 25 },
+      paper_bgcolor: "white",
+      font: { color: "black", family: "Arial" }
+    };
+    
+    Plotly.newPlot("gauge", gaugeChart, layout);
 
 <br>
 
