@@ -165,7 +165,6 @@ function buildCharts(_meta) {
 
 <br>
 
-
 Gauge Chart: 
 ![alt text](https://github.com/ykang0211/plotly-challenge/blob/master/images/gauge_chart.PNG "Gauge Chart")
 
@@ -214,6 +213,7 @@ init()
 ```
 
 <br>
+
 
 
 #### Render template
