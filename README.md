@@ -8,7 +8,7 @@ Check out my [app](https://ykang0211.github.io/plotly-challenge/).
 
 <br>
 
-<div align='center'><img width='60%' src='images/b3-dash.jpg' alt='b3-dashboard'></div>
+<div align='center'><img width='60%' src='images/dashboard.pne' alt='dashboard'></div>
 
 <br>
 
@@ -220,7 +220,11 @@ Here is an example of two different options selected from the dropdown.
 
 <br>
 
-<div align='center'><img width='80%' src='images/option-changed-new-sample.gif' alt='update-sample-gif'></div>
+<div align='center'><img width='80%' src='images/gauge_chart.png' alt='gauge_chart'></div>
+
+<br>
+
+<div align='center'><img width='80%' src='images/bubble.png' alt='bubble'></div>
 
 <br>
 
