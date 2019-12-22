@@ -8,7 +8,8 @@ Check out my [app](https://ykang0211.github.io/plotly-challenge/).
 
 <br>
 
-<div align='center'><img width='60%' src='images/dashboard.pne' alt='dashboard'></div>
+Dashboard: 
+![alt text](https://github.com/ykang0211/plotly-challenge/blob/master/images/dashboard.PNG "Dashboard")
 
 <br>
 
@@ -45,7 +46,8 @@ function buildMetadata(_meta) {
 
 <br>
 
-<div align='center'><img width='30%' src='images/panel.png' alt='panel'></div>
+Panel: 
+![alt text](https://github.com/ykang0211/plotly-challenge/blob/master/images/panel.PNG "panel")
 
 <br>
 
@@ -163,20 +165,15 @@ function buildCharts(_meta) {
 
 <br>
 
-Pie Chart:
 
 <br>
 
-<div align='center'><img width='40%' src='images/piechart.jpg' alt='pie-chart'></div>
+Gauge Chart: 
+![alt text](https://github.com/ykang0211/plotly-challenge/blob/master/images/gauge_chart.PNG "Gauge Chart")
 
 <br>
-
-Bubble Chart:
-
-<br>
-
-<div align='center'><img width='80%' src='images/bubblechart.jpg' alt='bubble-chart'></div>
-
+Bubble Chart: 
+![alt text](https://github.com/ykang0211/plotly-challenge/blob/master/images/bubble.PNG "Bubble Chart")
 <br>
 
 I made two more functions: ```init()``` and ```optionChanged()```. The ```init()``` function just initializes the build of the first sample. The ```optionChanged()``` function updates the previous functions ```buildCharts()``` and ```buildMetadata()``` when a new sample is selected by the user from the dropdown in the metadata panel.
@@ -216,17 +213,6 @@ init()
 
 <br>
 
-Here is an example of two different options selected from the dropdown.
-
-<br>
-
-<div align='center'><img width='80%' src='images/gauge_chart.png' alt='gauge_chart'></div>
-
-<br>
-
-<div align='center'><img width='80%' src='images/bubble.png' alt='bubble'></div>
-
-<br>
 
 #### Render template
 
